@@ -1,0 +1,215 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+        body {
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #fdf5e6 0%, #fff8f0 100%);
+            color: #2d1810;
+            line-height: 1.5;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(165deg, #8b4513 0%, #a0522d 100%);
+            color: white;
+            text-align: center;
+            padding: 3rem 1rem;
+            clip-path: polygon(0 0, 100% 0, 100% 95%, 0 100%);
+            position: relative;
+        }
+
+        .header-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        header h1 {
+            font-size: clamp(2.5rem, 8vw, 4rem);
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        header p {
+            font-size: 1.25rem;
+            opacity: 0.95;
+            font-weight: 300;
+        }
+
+        /* Pudim Showcase */
+        .pudim-showcase {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .pudim-image img {
+            width: 100%;
+            height: auto;
+            border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+            box-shadow: 0 20px 40px rgba(139, 69, 19, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .pudim-image img:hover {
+            transform: scale(1.02);
+        }
+
+        .pudim-info h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: #8b4513;
+        }
+
+        .pudim-info p {
+            font-size: 1.1rem;
+            color: #4a2c1a;
+            margin-bottom: 2rem;
+        }
+
+        /* Share Buttons */
+        .share-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+        }
+
+        .share-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.25rem;
+            border-radius: 50px;
+            text-decoration: none;
+            color: white;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            backdrop-filter: blur(4px);
+        }
+
+        .share-btn:hover {
+            transform: translateY(-2px);
+            filter: brightness(1.1);
+        }
+
+        .facebook { background: #1877f2; }
+        .twitter { background: #000000; }
+        .pinterest { background: #e60023; }
+        .whatsapp { background: #25d366; }
+
+        /* Section Titles */
+        .section-title {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+            color: #8b4513;
+        }
+
+        .section-title::after {
+            content: "✦";
+            display: block;
+            font-size: 1.5rem;
+            color: #cd853f;
+            margin-top: 0.5rem;
+        }
+
+        /* History Cards */
+        .history-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .history-card {
+            background: rgba(255,255,255,0.7);
+            backdrop-filter: blur(10px);
+            padding: 2rem;
+            border-radius: 2rem;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(139, 69, 19, 0.1);
+            border: 1px solid rgba(255,215,175,0.3);
+            transition: all 0.3s ease;
+        }
+
+        .history-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(139, 69, 19, 0.15);
+        }
+
+        .history-card i {
+            font-size: 2.5rem;
+            color: #cd853f;
+            margin-bottom: 1rem;
+        }
+
+        .history-card h3 {
+            margin-bottom: 1rem;
+            color: #8b4513;
+        }
+
+        /* Curiosities */
+        .curiosities-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            text-align: center;
+        }
+
+        .curiosity-item {
+            padding: 2rem;
+            background: linear-gradient(135deg, #fff5e6, #ffe6d5);
+            border-radius: 1.5rem;
+            border-left: 4px solid #cd853f;
+        }
+
+        .curiosity-item h3 {
+            font-size: 2.5rem;
+            color: #8b4513;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .pudim-showcase {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .curiosities-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .share-buttons {
+                justify-content: center;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .share-btn span {
+                display: none;
+            }
+            
+            .share-btn i {
+                font-size: 1.2rem;
+            }
+            
+            .share-btn {
+                padding: 0.75rem;
+            }
+    }
