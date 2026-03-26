@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atividade 2 - Manipulação DOM</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            background: #f3f4f6;
+            line-height: 1.5;
+            padding: 2rem 1rem;
+            color: #111827;
+        }
+
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+        }
+
+        /* Card principal */
+        .card {
+            background: #ffffff;
+            border-radius: 1rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05), 0 10px 15px -5px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+        }
+
+        /* Header */
+        .header {
+            padding: 1.5rem 1.75rem 0.5rem 1.75rem;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .header h1 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #111827;
+            letter-spacing: -0.01em;
+        }
+
+        .header p {
+            font-size: 0.875rem;
+            color: #6b7280;
+            margin-top: 0.25rem;
+        }
+
+        /* Seções */
+        .section {
+            padding: 1.5rem 1.75rem;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .section:last-child {
+            border-bottom: none;
+        }
+
+        .section-title {
+            font-size: 0.875rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #6b7280;
+            margin-bottom: 1rem;
+        }
+
+        /* Contador */
+        .counter-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            background: #f3f4f6;
+            border: 1px solid #e5e7eb;
+            padding: 0.5rem 1.25rem;
+            border-radius: 0.5rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: #374151;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .btn:hover {
+            background: #e5e7eb;
+            border-color: #d1d5db;
+        }
+
+        .btn-primary {
+            background: #111827;
+            border-color: #111827;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #1f2937;
+            border-color: #1f2937;
+        }
+
+        .btn-danger {
+            background: #fee2e2;
+            border-color: #fecaca;
+            color: #991b1b;
+        }
+
+        .btn-danger:hover {
+            background: #fecaca;
+        }
+
+        .counter-value {
+            font-size: 1.75rem;
+            font-weight: 600;
+            background: #f9fafb;
+            padding: 0.25rem 1rem;
+            border-radius: 0.5rem;
+            border: 1px solid #e5e7eb;
+            min-width: 80px;
+            text-align: center;
+            font-family: monospace;
+            color: #111827;
+        }
+
+        /* Input group */
+        .input-group {
+            margin-bottom: 1rem;
+        }
+
+        .text-field {
+            width: 100%;
+            padding: 0.625rem 0.875rem;
+            border: 1px solid #e5e7eb;
+            border-radius: 0.5rem;
+            font-size: 0.875rem;
+            font-family: inherit;
+            transition: all 0.15s ease;
+            background: white;
+        }
+
+        .text-field:focus {
+            outline: none;
+            border-color: #111827;
+            box-shadow: 0 0 0 2px rgba(17, 24, 39, 0.1);
+        }
+
+        .char-info {
+            font-size: 0.75rem;
+            color: #6b7280;
+            margin-top: 0.5rem;
+        }
+
+        /* Área de parágrafos */
+        .paragraphs-area {
+            margin-top: 1rem;
+            border-top: 1px solid #f3f4f6;
+            padding-top: 1rem;
+        }
+
+        .paragraphs-area p {
+            background: #f9fafb;
+            padding: 0.625rem 0.875rem;
+            border-radius: 0.5rem;
+            margin-bottom: 0.5rem;
+            font-size: 0.875rem;
+            border: 1px solid #f0f0f0;
+            word-break: break-word;
+        }
+
+        .empty-message {
+            font-size: 0.875rem;
+            color: #9ca3af;
+            text-align: center;
+            padding: 1rem;
+            background: #f9fafb;
+            border-radius: 0.5rem;
+            border: 1px dashed #e5e7eb;
+        }
+
+        /* Listas */
+        .lists-area {
+            margin-top: 1rem;
+        }
+
+        .list-item-wrapper {
+            margin-bottom: 1rem;
+        }
+
+        .list-item-wrapper ul,
+        .list-item-wrapper ol {
+            background: #f9fafb;
+            padding: 1rem 1rem 1rem 2rem;
+            border-radius: 0.5rem;
+            border: 1px solid #f0f0f0;
+            margin: 0;
+        }
+
+        .list-item-wrapper li {
+            margin: 0.25rem 0;
+            font-size: 0.875rem;
+            color: #374151;
+        }
+
+        .list-placeholder {
+            font-size: 0.875rem;
+            color: #9ca3af;
+            text-align: center;
+            padding: 1rem;
+            background: #f9fafb;
+            border-radius: 0.5rem;
+            border: 1px dashed #e5e7eb;
+        }
+
+        /* Grupo de botões */
+        .button-group {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+        }
+
+        /* Footer */
+        .footer {
+            padding: 1rem 1.75rem;
+            border-top: 1px solid #e5e7eb;
+            background: #fafafa;
+            font-size: 0.75rem;
+            color: #9ca3af;
+            text-align: center;
+        }
+
+        hr {
+            margin: 1rem 0;
+            border: none;
+            border-top: 1px solid #f0f0f0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <div class="header">
+                <h1>Manipulação do DOM</h1>
+                <p>Interação com elementos HTML através do JavaScript</p>
+            </div>
+
+            <!-- Seção 1: Contador de cliques -->
+            <div class="section">
+                <div class="section-title">Contador</div>
+                <div class="counter-wrapper">
+                    <button class="btn btn-primary" id="btnIncrement">Incrementar</button>
+                    <button class="btn" id="btnDecrement">Decrementar</button>
+                    <span class="counter-value" id="counterDisplay">0</span>
+                </div>
+                <div class="char-info" style="margin-top: 0.75rem;">
+                    O contador não permite valores negativos.
+                </div>
+            </div>
+
+            <!-- Seção 2: Adicionar texto dinâmico + contador de caracteres -->
+            <div class="section">
+                <div class="section-title">Adicionar texto</div>
+                <div class="input-group">
+                    <input type="text" id="textInput" class="text-field" placeholder="Digite uma mensagem e pressione Enter" autocomplete="off">
+                    <div class="char-info" id="charCounter">0 caracteres (sem espaços)</div>
+                </div>
+                <div class="paragraphs-area" id="paragraphsContainer">
+                    <div class="empty-message">Nenhuma mensagem adicionada.</div>
+                </div>
+            </div>
+
+            <!-- Seção 3: Adicionar listas (ordenada ou não ordenada) -->
+            <div class="section">
+                <div class="section-title">Adicionar listas</div>
+                <div class="button-group">
+                    <button class="btn" id="btnAddOl">Lista ordenada</button>
+                    <button class="btn" id="btnAddUl">Lista não ordenada</button>
+                </div>
+                <div class="lists-area" id="listsContainer">
+                    <div class="list-placeholder">Nenhuma lista criada.</div>
+                </div>
+            </div>
+
+            <!-- Seção 4: Botão de reset -->
+            <div class="section">
+                <div class="section-title">Reset</div>
+                <button class="btn btn-danger" id="btnReset">Limpar tudo</button>
+                <div class="char-info" style="margin-top: 0.75rem;">
+                    Remove todos os parágrafos, listas e zera o contador.
+                </div>
+            </div>
+
+            <div class="footer">
+                Atividade 2 - DOM: contador, texto dinâmico, caracteres sem espaços, listas e reset
+            </div>
+        </div>
+    </div>
+
+    <script>
+ 
+        // 1. Buscar elementos na árvore DOM e guardar em variáveis
+     
+        
+        // Elementos do contador
+        const btnIncrement = document.getElementById('btnIncrement');
+        const btnDecrement = document.getElementById('btnDecrement');
+        const counterDisplay = document.getElementById('counterDisplay');
+        
+        // Elementos do texto dinâmico e contador de caracteres
+        const textInput = document.getElementById('textInput');
+        const charCounter = document.getElementById('charCounter');
+        const paragraphsContainer = document.getElementById('paragraphsContainer');
+        
+        // Elementos das listas
+        const btnAddOl = document.getElementById('btnAddOl');
+        const btnAddUl = document.getElementById('btnAddUl');
+        const listsContainer = document.getElementById('listsContainer');
+        
+        // Botão de reset
+        const btnReset = document.getElementById('btnReset');
+        
+     
+        // 2. Estado inicial
+
+        let clickCount = 0;
+    
+        // 3. Funções do contador
+    
+        function updateCounterDisplay() {
+            counterDisplay.textContent = clickCount;
+        }
+        
+        function incrementCounter() {
+            clickCount++;
+            updateCounterDisplay();
+        }
+        
+        function decrementCounter() {
+            if (clickCount > 0) {
+                clickCount--;
+                updateCounterDisplay();
+            } else {
+                // Alerta informando que o contador já está em zero
+                alert('Atenção: o contador já está em zero. Não é possível decrementar.');
+            }
+        }
+        
+        
+        // 4. Funções para texto dinâmico e contador de caracteres
+        
+        
+        // Função que conta caracteres ignorando espaços
+        function updateCharCount() {
+            const text = textInput.value;
+            // Remove todos os espaços (inclui espaços, tabs, quebras)
+            const textWithoutSpaces = text.replace(/\s/g, '');
+            const count = textWithoutSpaces.length;
+            charCounter.textContent = count + ' caractere(s) (sem espaços)';
+        }
+        
+        // Função para adicionar um novo parágrafo com o texto do input
+        function addNewParagraph() {
+            const textValue = textInput.value;
+            
+            // Validação: se o texto estiver vazio ou só com espaços
+            if (textValue.trim() === '') {
+                alert('Digite uma mensagem antes de pressionar Enter.');
+                return;
+            }
+            
+            // Remove a mensagem de "Nenhuma mensagem" se existir
+            const emptyMessage = paragraphsContainer.querySelector('.empty-message');
+            if (emptyMessage) {
+                emptyMessage.remove();
+            }
+            
+            // Cria um novo elemento <p>
+            const newParagraph = document.createElement('p');
+            newParagraph.textContent = textValue;
+            
+            // Adiciona o parágrafo ao container
+            paragraphsContainer.appendChild(newParagraph);
+            
+            // Limpa o campo de texto
+            textInput.value = '';
+            
+            // Atualiza o contador de caracteres (agora com valor vazio)
+            updateCharCount();
+            
+            // Foca novamente no campo para facilitar nova digitação
+            textInput.focus();
+        }
+
+        // 5. Funções para adicionar listas (ordenada e não ordenada)
+
+        // Função auxiliar para remover o placeholder de listas vazias
+        function removeListsPlaceholder() {
+            const placeholder = listsContainer.querySelector('.list-placeholder');
+            if (placeholder) {
+                placeholder.remove();
+            }
+        }
+        
+        // Cria uma lista ordenada com itens de exemplo
+        function createOrderedList() {
+            const ol = document.createElement('ol');
+            
+            // Adiciona 3 itens de exemplo
+            const items = ['Primeiro item', 'Segundo item', 'Terceiro item'];
+            items.forEach(item => {
+                const li = document.createElement('li');
+                li.textContent = item;
+                ol.appendChild(li);
+            });
+            
+            const wrapper = document.createElement('div');
+            wrapper.className = 'list-item-wrapper';
+            wrapper.appendChild(ol);
+            
+            return wrapper;
+        }
+        
+        // Cria uma lista não ordenada com itens de exemplo
+        function createUnorderedList() {
+            const ul = document.createElement('ul');
+            
+            // Adiciona 3 itens de exemplo
+            const items = ['Item 1', 'Item 2', 'Item 3'];
+            items.forEach(item => {
+                const li = document.createElement('li');
+                li.textContent = item;
+                ul.appendChild(li);
+            });
+            
+            const wrapper = document.createElement('div');
+            wrapper.className = 'list-item-wrapper';
+            wrapper.appendChild(ul);
+            
+            return wrapper;
+        }
+        
+        // Adicionar lista ordenada
+        function addOrderedList() {
+            removeListsPlaceholder();
+            const newList = createOrderedList();
+            listsContainer.appendChild(newList);
+        }
+        
+        // Adicionar lista não ordenada
+        function addUnorderedList() {
+            removeListsPlaceholder();
+            const newList = createUnorderedList();
+            listsContainer.appendChild(newList);
+        }
+        
+        // 6. Função de reset (limpa todas as interações)
+          
+        function resetAll() {
+            // 1. Zerar o contador
+            clickCount = 0;
+            updateCounterDisplay();
+            
+            // 2. Remover todos os parágrafos adicionados
+            while (paragraphsContainer.firstChild) {
+                paragraphsContainer.removeChild(paragraphsContainer.firstChild);
+            }
+            
+            // Recria a mensagem de "nenhuma mensagem"
+            const emptyMessageDiv = document.createElement('div');
+            emptyMessageDiv.className = 'empty-message';
+            emptyMessageDiv.textContent = 'Nenhuma mensagem adicionada.';
+            paragraphsContainer.appendChild(emptyMessageDiv);
+            
+            // 3. Remover todas as listas criadas
+            // Remove todos os wrappers de lista
+            const allListWrappers = listsContainer.querySelectorAll('.list-item-wrapper');
+            allListWrappers.forEach(wrapper => wrapper.remove());
+            
+            // Verifica se existe placeholder de listas, se não, cria um novo
+            const existingPlaceholder = listsContainer.querySelector('.list-placeholder');
+            if (!existingPlaceholder) {
+                const listPlaceholder = document.createElement('div');
+                listPlaceholder.className = 'list-placeholder';
+                listPlaceholder.textContent = 'Nenhuma lista criada.';
+                listsContainer.appendChild(listPlaceholder);
+            }
+            
+            // 4. Limpar campo de texto e resetar contador de caracteres
+            textInput.value = '';
+            updateCharCount();
+            
+            // Focar no campo de texto
+            textInput.focus();
+        }
+        
+        
+        // 7. Configurar os eventos (event listeners)
+    
+        // Eventos do contador
+        btnIncrement.addEventListener('click', incrementCounter);
+        btnDecrement.addEventListener('click', decrementCounter);
+        
+        // Evento para pressionar a tecla Enter no campo de texto
+        textInput.addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                addNewParagraph();
+            }
+        });
+        
+        // Evento para atualizar o contador de caracteres em tempo real (input)
+        textInput.addEventListener('input', function() {
+            updateCharCount();
+        });
+        
+        // Eventos para adicionar listas
+        btnAddOl.addEventListener('click', addOrderedList);
+        btnAddUl.addEventListener('click', addUnorderedList);
+        
+        // Evento do botão de reset
+        btnReset.addEventListener('click', resetAll);
+        
+       
+        // 8. Inicialização (estado inicial correto)
+      
+         
+        updateCounterDisplay();
+        updateCharCount();
+    
+        if (!listsContainer.querySelector('.list-placeholder')) {
+            const initialPlaceholder = document.createElement('div');
+            initialPlaceholder.className = 'list-placeholder';
+            initialPlaceholder.textContent = 'Nenhuma lista criada.';
+            listsContainer.appendChild(initialPlaceholder);
+        }
+        
+        if (!paragraphsContainer.querySelector('.empty-message')) {
+            const initialEmptyMsg = document.createElement('div');
+            initialEmptyMsg.className = 'empty-message';
+            initialEmptyMsg.textContent = 'Nenhuma mensagem adicionada.';
+            paragraphsContainer.appendChild(initialEmptyMsg);
+        }
+    </script>
+</body>
+</html>
